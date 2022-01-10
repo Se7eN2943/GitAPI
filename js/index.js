@@ -13,12 +13,7 @@ const debounce = (fn, debounceTime) => {
 };
 
 function searching() {
-    let arrValue = search.value.split('')
-    if (arrValue.length == 0) {
-        searchHelp.style.display = "none"
-        return
-    }
-    if (arrValue.findIndex(i => i !== ' ') !== -1) {
+    if (search.value.trim().length !== 0) {
         fetch(`https://api.github.com/search/repositories?q=${search.value}&per_page=5&sort=stars`).then(resp => resp.json()).then(res => {
             resArr = res.items
             let helpBlank = document.querySelectorAll('.serch_help__blank')
@@ -32,6 +27,9 @@ function searching() {
                 searchHelp.addEventListener('click', add)
             }
         })
+    } else {
+        searchHelp.style.display = "none"
+        return
     }
 }
 
